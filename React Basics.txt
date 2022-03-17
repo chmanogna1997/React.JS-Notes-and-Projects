@@ -1,0 +1,62 @@
+===> React basics : how to run react app, use of npm build, JSX, MPA VS SPA, Pass values from parents to child.
+
+==> npx create-react-app test-app
+
+   => MPA => Multiple page application => on enter data or change content => page navigates 
+   => SPA => Single page application => single static page => services calls instead of page nav or change content
+==> In JS we have seen JS apps => having local state, rendering HTML when state changes
+==> react will automatically re-render when the state changes.
+==> HTML and react.JS are declarative => need to tell what to do => it can take care of itself and do it.
+==> JS is imperative => you tell what to do it and how to do it.
+==> React here uses JSX => Javascript XML => which is declarative but similar to HTML.
+    ==> JSX returns java script objects. having props that are properties.
+	==> In JS we have className but in JSX it is class.
+	==> uses {} to replace with values => no need of (` `) or ${}
+	==> React owns The DOM so we cannot use => document.queryselector or document.getElement
+==> lets see how to pass values from parent to child:::
+    
+	==> In G.js file
+	 
+	    function G({task, done}){
+           console.log(task,done);
+           const A = " boom laka laka"
+           return(
+              <div>
+              <p>In G.js file</p>
+              <p> In G.js file {task} and it is {done}</p>
+              <p> {A}</p>
+              </div>
+             )
+             };
+             export default G;
+			 
+	==> In other file
+	      <G task="mona task" done={false}></G>
+	==> DOM means document object model
+	
+    
+
+==> the library react-dom has render function in it => will re-render on state change.
+     ==> the render function here converts these objects to DOM elemets.
+==> all components names we create should begin with caps.
+
+==> React is great but lot of set-up has following:
+    react
+	building( converting react to HTML+JS)
+	linting (syntax warning, help)
+	live reload
+	development server.
+	
+==> On changing JS files to JSX doesnt give any error.
+==> ****** class names should be kebab-cased(all lowercase, hyphen-seperated)
+
+==> lets build our app
+    ==> npm run build ==> it creates /build folder having different js files having wierd names => that is cache-busting
+	==> why do we need build => this is to deploy our changes in production
+	==> this ensures that finished project is bundled, minified and optimized.
+	==> the build function here merges related css and html files into one. => hence the pages are render in seconds
+==> When to build => Do all your development with the development server => use npm start.   
+    ==> Once done with the project and wanna put that in public => we need to build use npm run build
+==> 	
+
+ 

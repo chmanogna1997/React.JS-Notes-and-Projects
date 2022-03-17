@@ -1,0 +1,261 @@
+==> How to create visual changes: we will see how to change a css class on event happening
+
+
+==> In modren javascript => add 'use strict'  to the javascript file 
+    ==> why add it ? ==> there is a bug in JS where we can assign value to a variable without declaring it.
+     	Example:  x = 10; console.log(x) ==> ouput is 10 but on using 'use strict' the output will give an compilation error 
+		that => x is not defined
+      
+==> use of classlist ==> classlist is a DOM property of javascript => that is used to add styling css classes to elements
+    ==> example:
+	     const B = document.getElementbyTagname('button')[0];
+		 B.classlist.toggle('clasname')
+		        or
+	     B.classlist.add('clasname');
+		         or
+		 B.classlist.remove('clasname')
+		 
+==> Propogation : refer to how events travel across the elements => propogation is 2 types => bubbling and capturing
+     => bubbling => travel from target to root
+	 => capturing => trvael from root to the target
+	 
+	 =>for an eventlistiner => we have 3rd parameter called useCapture => which is usually default => if we make it true 
+	 then captuting phase is enabled.
+	 
+	 => if your button has a click event , during bubbling it will trigger all click event along the way.
+	 => event.stopPropogation() => to stop it
+	 
+==> state is a collection/ set of all values that can change in an application.
+==> data sets: example : data-index:
+==> toggle : ThemeCode = ThemeCode ? 0 :1; ThemeCode = 0;
+==> webservices => send/receive data without page navigation => htl, css, JS remains same.
+    webservices => are async =>  not in specific order.
+	==> chain of callbacks is called pyramid doom. this happens after this and continuosly.
+	=> to resolve pyramid doom => we intoduced promise
+	
+==> Promise => this an object => having states:
+   => pending
+   => resolved
+   => rejected.
+      => we attach call back for/ if when resolved or rejected . when the states are hit callbacks placed in event Q
+=> example of promise => 
+   let K = Promise.resolve().then(()=> {
+    console.log("boom  promise fullfilled");
+    return 1;
+});
+
+console.log("K is ", K);==> here the output K is a promise( that is object) as follows:
+ K is Promise {<pending>}
+      [[Prototype]]: Promise
+      [[PromiseState]]: "fulfilled"
+      [[PromiseResult]]: 1
+
+=> here both are same => happens if first promise is resolved
+
+const A= Promise.resolve();
+const AB = A.then(() => console.log("in B"));
+const ABCC = AB.then(()=> {console.log("in C")});
+            or ==> the below one is called chaining
+Promise.resolve()
+.then(() => console.log("in 1"))
+.then(()=>{console.log("in 2")} );
+
+==> const promise1 = Promise.resolve("hi");
+    const V1 = promise1.then((t)=> {console.log("in midde", t)});
+    console.log("V! is ", V1);	   0utput is : V! object promise :: in middle hi
+  remember : .then() ==> always returns new promise
+           : we can pass values from one call back to the other.
+
+==> promise trick question : 
+
+const result = Promise.resolve(1)
+               .then( val => {
+                console.log(val);
+                  return val+1; ==> 2
+                   })
+              .then( val => {
+              console.log(val);
+               return val+1; ==> 3
+                  })
+              .then( val => {
+                console.log(val);
+                 return val+1;    ==> 4
+                    });
+      Here the output is promise that resolved with 4 having result 4. that is promise result is 4
+==> *** try catch is useless with promise but why lets see==>
+    try{
+    ({}).foo();
+     }
+    catch(e){ console.log(" the error is ", e); }
+	console.log(" after try and catch");
+    console.log(" after try catch");  ====> here the output is as below
+	                                      => Type error : (){}
+										  => after try catch
+										  
+							but wthen we use promises
+
+            try{
+    Promise.resolve()
+    .then(() => {
+        console.log("11111 try catch");
+        ({}).foo();
+    });
+     } catch(err){
+       console.log("error is ", err);  ==> this doesnt execute as it is passes through this and theer is no error
+	   }
+      console.log("222222222 try catch");	 ===> here the output is as below
+	                                         222222222 try catch
+											 111111111 try catch
+											 and error that foo not defined
+											 
+				when the callback exectes though there is an error there wont be any catch function => hence
+				try catch not useful in promises.
+				
+=> as there is no use of try{} catch {} ===> catch () method has been introduced => that returns an 
+   promise object => when the following promise has been rejected. ==> allows you to handle errors and keep going
+    example ===>
+	    Promise.resolve()
+    .then(() => {
+        console.log("11111 try catch");
+        ({}).foo();
+    })
+    .catch((e)=> console.log("error",e))
+    console.log("222222222 try catch");   ==> here the output is ==>
+	                                         2222222 try catch
+											 111111 try catch
+											 error typeerror() ==> foo is not defined.
+		
+==> this best explains synchronos/async=> https://www.loginradius.com/blog/async/callback-vs-promises-vs-async-await/
+
+==> Async/Await ==> newer way to write promisesm  => this allows try{} catch{} ==> hides .then() and .caych() ===> need to learn further.
+
+====================> JSON => javascript object notation
+ => just simply a text document => can store => cannot have functions/methods, classes ==> it is just a text not JS => this is easily converted to Javascript.
+ => In JSON => all object => key and value pair are double qoted::: 
+     whitespace still irrelevant :::: 
+	 no trailing commas
+	 
+ ======> XML => it is used for storing data in structured format.
+ ======> AJAX => it is a request made to web server asynchronously => to get data => using xml
+               => xml is based om js , any issue in browser js affects the request(xmlhttprequest)
+			   => complex, not secure.
+			   
+==================> web services
+=> used to create a request to get/send data
+=> different conventions:
+   : Soap => mostly uses XML(older version)
+   : GraphQL => query language => query in JSON and we get response in JSON
+   : REST services => uses Http as query language.=> but not as flexible as graphQL
+     => URL => is the resource.
+	 => HTTP Method => is the interaction. get() to getdata ; post() => to send data
+	 => HTTP status code => result 
+	 => body => send/get whatever in response.
+   ==> Http methods => Get -read(); post() -> create new record; 
+                       put()=> replcing the entire record with new record ; 
+					   patch() => update/add/delete a new field; 
+					   delete() => delete the record
+  ==> the url path has data => example => students/mona/grades
+  ==> query params => way we can send the data example: http://example.com/path?name=Branch&products=[Journeys,Email,Universal%20Ads]
+  ==> get() req does not have body params others have it.
+  ==> for rest we get data in JSON => even with non-JS server.
+
+===========================> Fetch()
+=> Fetch is used for accessing/manuplating http pipeline like getting request , sending response.
+=>to make service calls => previously we had XMLHttpRequst=> no longer in use.
+=> we have other libraries like JQUERY, AXIOS  now we have fetch().
+=> fetch returns => promises
+::: example :: const P = fetch('/people')
+               P.then(() => {console.log("hello world")})
+			   
+			   OR
+			   
+	fetch('/people').then((response) => {console.log(response.status)})
+	
+=> here the respose doesnot have the data => we need to call a method to parse the body
+   response.json() => to get it
+ ::: example ::
+       fetch('/people').then(respnse => response.json()).then(body => console.log(body));
+	
+==> no we have our data we can update the DOM 
+  lets see how =>
+  
+  fetch('/people')
+  .then(response => response.json())
+  .then( people => 
+       const N = people.map( name => `<li>${name}</li>`).join(' ')
+  })
+  
+  => this is a bad idea let see why  ==> doing this we can update our state variables
+   the best way is like below ::::::
+   
+   <ul class="example"></ul>
+let names = [];
+const list = document.querySelector('.example');
+fetch('/people/')
+.then( response => response.json() )
+.then( people => {
+names = people; // update state
+render();
+});
+function render() {
+list.innerHTML = names.map(
+name => `<li>${name}</li>`
+).join('')
+}    ===> here we are making it global variable names and using a function to render that.
+
+=====> how to handle errors in fetch
+
+if there is any error in service that .catch() method doesnot throw error => as we are geeting response that is having error.
+.catch() handles only network errors => like if there is no response after calling
+
+Instead you can check for response status ==> example ( response.ok)
+
+====> handling errors 
+
+fetch('/people')
+.catch(() => Promise.reject({error:'network error'})) ==> for net work errors
+.then(response => {
+if(reponse .ok){return response.json();}
+return response.json().then(err => Promise.reject(err)) ==> raise an service error
+})
+.then(people => {render})
+.catch(err => status.innerText = err.error) ==> we get service error here
+
+
+======> different methods using fetch
+ => fetch uses default method => get
+ => fetch has 2 parametes => 1st is => URL ; 2nd is => method and its related request body 
+     Example => fetch('/people', {
+	 method: 'POST',
+	 headers : new Headers({'content-type' : 'application/json'}) ==> this is used to send additional data to server
+	 body: JSON.stringify({name:'mona', age: 32}) ==> converts JSON  to string => {"NAME": "mona", "age":32}
+	 })
+	 
+=> 
+ 
+
+
+
+
+  
+  
+  
+   
+ 
+
+
+	 
+				
+
+       	  
+							
+	
+                    
+   
+	  
+	  
+    
+	 
+	 
+		 
+	
