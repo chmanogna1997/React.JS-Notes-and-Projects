@@ -1,0 +1,81 @@
+  ==> *** topics covered ********* 
+      ==> Scemantic HTML
+	  ==> Unicode characters
+	  ==> how to pass values on event 
+	  ==> props review
+	  ==> children tag
+	  ==> Fragments.
+
+
+
+****** what is Semantic HTML ***********
+
+==> A scemantic element clearly describes its meaning to both the browser and developer
+   ==> Examples
+              ==> non-semantic : <div>, <span>
+			  ==> semantic : <form>, <table>, <nav>,<footer>, <header>
+			  
+==> Unicode Characters:
+    ==> Are characters beyond common english characters or symbols
+	===> Example : Different Emojis, different symbols like twitter, facbook, mail etc
+ ==> How to include them in your code.
+     ==> This totally depends on which file you are placing it: HTML, CSS or JS.
+	    ==> Example : uniceode for cat face character is :
+		     ==> HTML: &#128049;
+                 CSS: \1F431
+                 JS: \uD83D\uDC31 or \u{1F431
+	==> Best website to find UNICODE: https://unicode-table.com/en/sets/heart-symbols/
+	
+ ==> Unicode Warning : encoding is very important(wrong encoding is wrong pattern). <meta charset = "utf-8">
+ 
+ 
+********* passing values on click in react.JS ********************
+
+==> *** <button onClick = {addOnClick(t)} /> ==> this doesnt work in react.js instead use:
+      
+	  <button onClick = {() => addOnClick(t)}> ==> this works
+	  
+	  
+******** PROPS REVIEW ***********************
+
+<MyComp name= "BAo" />
+
+function MyComp(props) {
+                        return(<div>{props.name}</div>)
+}
+
+                OR
+				
+function MYComp({name}) { return(<div{name} </div> )}
+
+
+***********************  Children tag ******************
+
+<MyComp>This is mona </MyComp>
+
+function MYComp({ children }){
+return(
+       <div>
+	         I heard <b> {children} </b>    ==> this converted to <div> I heard : <b>This is mona</b>
+       </div>
+)
+}
+
+==> When to use children::
+    ==> Some components are content ==> paragraphs, lists, forms
+	==> some components are modify other content ==> modal windows, collapsing section.
+	
+	
+*************** FRAGMENTS *******************************************
+
+==> we need to wrap up all the elements in div container before rendering the components
+    fragment is used => If we wanna render multiple HTML elements without using a container 
+	==> Fragment is a container that doesnt map to HTML element and only needed as containing element of the component.
+	==> Only used for wrapping up the elements in the container.
+	Example : 
+	      return( <React.Fragment> ...... </React.Fragment>)
+		                    OR
+		  return(<> ..... </>)
+		                    OR
+		  import { Fragment } from 'react'
+		  return(<Fragment>....</Fragment>)

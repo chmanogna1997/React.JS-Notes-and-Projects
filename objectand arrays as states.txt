@@ -1,0 +1,67 @@
+********************************************
+
+ ==> Arrays as states;
+ ==> Objects as states;
+
+
+
+****** Arrays in USESTATE *******************
+
+==> We can assign objects and arrays to states.
+   ==> Example : 
+       const [todos, setTodos] = useState(['nap', 'sleep', 'rest' ]);
+	   const [newTodo, setNewTodo] = useState('')
+	   return(
+	   <div>
+	   <TodoList list = {todos}> 
+	   <input
+	    value = {newTodo}
+		onInput = {() => setNewTodo(e.trget.value)}
+	   />
+	   <button 
+	     onClick = {() => setTodos([...todos, newTodo])}
+	   />
+	   </div>
+	   );
+	   ==> Here setting the sate to new array using []
+	       Using the Spread operator(...) ==> fills the array with exsisting elements and added new element.
+	  ==> For adding an element  ::
+	      ==> Do not use .push() or .unshift() => Use (...) or .slice()(to copy)
+	  ==> For removing an element ::
+          ==> Dont use .pop() or .shift() => Use .slice()
+
+		  
+********** Objects in USESTATE ***********************************
+
+==> example:
+    const[student setStudent] = useState({ name:'Jhon' , grade: '87' });
+	const [grade, setGrade] = useState({student.grade});
+	return(
+	       <div>
+		   <div> Name: {student.name}</div>
+		   <div> Grade : 
+		          <input 
+				     value = {grade}
+					 OnInput = {(e) => setGrade(e.target.Value)}
+				   />
+		   </div>
+		   <button
+		      onClick = {() ==> setStudent({...student,grade})}
+		   />
+		   </div>
+	)
+	 ==> Here we are using {} ==> to create an mew objects
+	     spread operator(...) ==> filling new object with exsisting one(copying)
+		 ==> following statement can also be written as:
+		     onClick = {() ==> setStudent({...student,grade})}
+			                  OR
+			 onClick = {() ==> setStudent({
+			                                ...student,
+			                                 grade: grade,})}
+											 
+											 
+==> Summary ** ==> Do not change an array/object directly
+                                    but
+					Create a new array/object with the change and set it.
+					
+			    
